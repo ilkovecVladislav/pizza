@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+
+import PizzaConstructor from './pages/PizzaConstructorPage';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <PizzaConstructor />
   </React.StrictMode>,
   document.getElementById('root'),
 );
