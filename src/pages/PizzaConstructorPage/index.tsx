@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PizzaConstructor from '../../modules/pizzaConstructor';
+import PizzaConstructor from 'modules/pizzaConstructor';
 
-const PizzaConstructorPage: React.FC = () => <PizzaConstructor />;
+const PizzaConstructorPage = () => <PizzaConstructor />;
 
 export default PizzaConstructorPage;

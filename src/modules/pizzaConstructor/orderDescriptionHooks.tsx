@@ -12,38 +12,7 @@ import {
   pizzaCheesesFieldOptions,
   pizzaVegetablesFieldOptions,
   pizzaMeatFieldOptions,
-  BASE_PIZZA_PRICE,
-  BIG_PIZZA_SIZE_PRICE,
-  ADDITIONAL_INGREDIENT,
-  SIZE_FIELD_NAME,
-  DOUGH_FIELD_NAME,
-  SAUCE_FIELD_NAME,
-  CHEESE_FIELD_NAME,
-  VEGETABLES_FIELD_NAME,
-  MEAT_FIELD_NAME,
-  BIG_PIZZA_SIZE,
-  ALL_PIZZA_PARAMS_ARR,
 } from './constants';
-
-const useCalculatePrice = (ingredients: { [key: string]: number | string }): number =>
-  useMemo(() => {
-    let result = BASE_PIZZA_PRICE;
-
-    ALL_PIZZA_PARAMS_ARR.forEach((ingredientName) => {
-      if (ingredients.hasOwnProperty(ingredientName) && ingredientName === SIZE_FIELD_NAME) {
-        if (ingredients[ingredientName] === toString(BIG_PIZZA_SIZE)) {
-          result += BIG_PIZZA_SIZE_PRICE;
-
-          return;
-        }
-      } else if (ingredients.hasOwnProperty(ingredientName) && ingredientName !== SIZE_FIELD_NAME) {
-        result += ADDITIONAL_INGREDIENT;
-        return;
-      }
-    });
-
-    return result;
-  }, [ingredients]);
 
 const getOptionByValue = (
   options: RadioOption[],
@@ -55,30 +24,30 @@ const getIngredientLabel = (
   ingredientValue: string | number,
 ): string | number | undefined | null => {
   switch (ingredientName) {
-    case SIZE_FIELD_NAME: {
+    case 'size': {
       const option = getOptionByValue(pizzaSizeFieldOptions, ingredientValue);
       return option?.label;
     }
-    case DOUGH_FIELD_NAME: {
+    case 'dough': {
       const option = getOptionByValue(pizzaDoughFieldOptions, ingredientValue);
       if (option && option.label && isString(option.label)) {
         return `на ${toLower(option.label)} тесте`;
       }
       return null;
     }
-    case SAUCE_FIELD_NAME: {
+    case 'sauce': {
       const option = getOptionByValue(pizzaSauceFieldOptions, ingredientValue);
       return option?.label;
     }
-    case CHEESE_FIELD_NAME: {
+    case 'cheese': {
       const option = getOptionByValue(pizzaCheesesFieldOptions, ingredientValue);
       return option?.label;
     }
-    case VEGETABLES_FIELD_NAME: {
+    case 'vegetables': {
       const option = getOptionByValue(pizzaVegetablesFieldOptions, ingredientValue);
       return option?.label;
     }
-    case MEAT_FIELD_NAME: {
+    case 'meat': {
       const option = getOptionByValue(pizzaMeatFieldOptions, ingredientValue);
       return option?.label;
     }
@@ -87,9 +56,14 @@ const getIngredientLabel = (
   }
 };
 
-const useOrderDescription = (ingredients: { [key: string]: number | string }): string =>
+type Params = {
+  ingredients: { [key: string]: number | string };
+  allPizzaParams: string[];
+};
+
+const useOrderDescription = ({ ingredients, allPizzaParams }: Params): string =>
   useMemo(() => {
-    const result = ALL_PIZZA_PARAMS_ARR.map((ingredientName) => {
+    const result = allPizzaParams.map((ingredientName) => {
       const ingredientValue = ingredients[ingredientName];
 
       if (ingredientValue) {
@@ -101,4 +75,4 @@ const useOrderDescription = (ingredients: { [key: string]: number | string }): s
     return compact(result).join(', ');
   }, [ingredients]);
 
-export { useCalculatePrice, useOrderDescription };
+export default useOrderDescription;

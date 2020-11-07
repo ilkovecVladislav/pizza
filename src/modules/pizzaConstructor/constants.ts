@@ -1,5 +1,5 @@
-const MEDIUM_PIZZA_SIZE = 30;
-const BIG_PIZZA_SIZE = 35;
+const MEDIUM_PIZZA_SIZE = '30';
+const BIG_PIZZA_SIZE_VALUE = '35';
 
 const pizzaSizeFieldOptions = [
   {
@@ -9,17 +9,15 @@ const pizzaSizeFieldOptions = [
   },
   {
     id: 'big',
-    value: BIG_PIZZA_SIZE,
+    value: BIG_PIZZA_SIZE_VALUE,
     label: '35 см',
   },
 ];
 
-const THIN_DOUGH = 'thin';
-
 const pizzaDoughFieldOptions = [
   {
     id: 'thin',
-    value: THIN_DOUGH,
+    value: 'thin',
     label: 'Тонкое',
   },
   {
@@ -100,10 +98,6 @@ const pizzaMeatFieldOptions = [
   },
 ];
 
-const BASE_PIZZA_PRICE = 200;
-const BIG_PIZZA_SIZE_PRICE = 50;
-const ADDITIONAL_INGREDIENT = 29;
-
 const SIZE_FIELD_NAME = 'size';
 const DOUGH_FIELD_NAME = 'dough';
 const SAUCE_FIELD_NAME = 'sauce';
@@ -115,6 +109,7 @@ const ALL_PIZZA_PARAMS_ARR = [
   DOUGH_FIELD_NAME,
   SAUCE_FIELD_NAME,
   CHEESE_FIELD_NAME,
+  VEGETABLES_FIELD_NAME,
   MEAT_FIELD_NAME,
 ];
 
@@ -126,20 +121,8 @@ export {
   pizzaCheesesFieldOptions,
   pizzaVegetablesFieldOptions,
   pizzaMeatFieldOptions,
-  // prices
-  BASE_PIZZA_PRICE,
-  BIG_PIZZA_SIZE_PRICE,
-  ADDITIONAL_INGREDIENT,
-  // fields names
-  SIZE_FIELD_NAME,
-  DOUGH_FIELD_NAME,
-  SAUCE_FIELD_NAME,
-  CHEESE_FIELD_NAME,
-  VEGETABLES_FIELD_NAME,
-  MEAT_FIELD_NAME,
   // other
-  MEDIUM_PIZZA_SIZE,
-  BIG_PIZZA_SIZE,
-  THIN_DOUGH,
+  SIZE_FIELD_NAME,
+  BIG_PIZZA_SIZE_VALUE,
   ALL_PIZZA_PARAMS_ARR,
 };

@@ -17,12 +17,12 @@ type Props = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const RadioButtonField: React.FC<Props> = ({ label, options, name, value, onChange }) => (
+const RadioButtonGroup = ({ label, options, name, value, onChange }: Props) => (
   <div className={styles.container}>
     <p className={styles.title}>{label}:</p>
     <div>
       {options.map((option) => (
-        <label key={option.id} className={styles.label} htmlFor="thin">
+        <label key={option.id} className={styles.label} htmlFor={option.id}>
           <input
             className={classes.option}
             type="radio"
@@ -39,4 +39,4 @@ const RadioButtonField: React.FC<Props> = ({ label, options, name, value, onChan
   </div>
 );
 
-export default RadioButtonField;
+export default RadioButtonGroup;

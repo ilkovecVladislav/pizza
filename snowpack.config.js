@@ -24,6 +24,10 @@ module.exports = {
     /* ... */
   },
   alias: {
-    /* ... */
+    assets: './src/assets',
+    components: './src/components',
+    modules: './src/modules',
+    pages: './src/pages',
+    types: './src/types',
   },
 };

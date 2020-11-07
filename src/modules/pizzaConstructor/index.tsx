@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
-import RadioButtonField from '../../components/Form/RadioButtonField';
-import pepperoniImg from '../../assets/images/pepperoni.jpg';
+import RadioButtonGroupField from 'components/Form/RadioButtonGroupField';
+import pepperoniImg from 'assets/images/pepperoni.jpg';
 import {
   pizzaSizeFieldOptions,
   pizzaDoughFieldOptions,
@@ -9,21 +9,15 @@ import {
   pizzaCheesesFieldOptions,
   pizzaVegetablesFieldOptions,
   pizzaMeatFieldOptions,
-  SIZE_FIELD_NAME,
-  DOUGH_FIELD_NAME,
-  SAUCE_FIELD_NAME,
-  CHEESE_FIELD_NAME,
-  VEGETABLES_FIELD_NAME,
-  MEAT_FIELD_NAME,
-  MEDIUM_PIZZA_SIZE,
-  THIN_DOUGH,
+  ALL_PIZZA_PARAMS_ARR,
 } from './constants';
-import { useCalculatePrice, useOrderDescription } from './utils';
+import useCalculatePizzaPrice from './priceCalcHooks';
+import useOrderDescription from './orderDescriptionHooks';
 
-const PizzaConstructor: React.FC = () => {
+const PizzaConstructor = () => {
   const [ingredients, setIngredients] = useState<{ [key: string]: string | number }>({
-    [SIZE_FIELD_NAME]: MEDIUM_PIZZA_SIZE,
-    [DOUGH_FIELD_NAME]: THIN_DOUGH,
+    size: '30',
+    dough: 'thin',
   });
 
   const handleChange = useCallback(({ target }) => {
@@ -31,8 +25,11 @@ const PizzaConstructor: React.FC = () => {
     setIngredients((prevState) => ({ ...prevState, [name]: value }));
   }, []);
 
-  const price = useCalculatePrice(ingredients);
-  const orderDescription = useOrderDescription(ingredients);
+  const price = useCalculatePizzaPrice({ ingredients, allPizzaParams: ALL_PIZZA_PARAMS_ARR });
+  const orderDescription = useOrderDescription({
+    ingredients,
+    allPizzaParams: ALL_PIZZA_PARAMS_ARR,
+  });
 
   const handleSubmit = useCallback(
     (event: React.FormEvent) => {
@@ -48,45 +45,45 @@ const PizzaConstructor: React.FC = () => {
       <h4 className="pizza__name">Pepperoni</h4>
       <p>{orderDescription}</p>
       <form onSubmit={handleSubmit}>
-        <RadioButtonField
+        <RadioButtonGroupField
           label="Размер"
-          name={SIZE_FIELD_NAME}
-          value={ingredients[SIZE_FIELD_NAME]}
+          name="size"
+          value={ingredients['size']}
           options={pizzaSizeFieldOptions}
           onChange={handleChange}
         />
-        <RadioButtonField
+        <RadioButtonGroupField
           label="Тесто"
-          name={DOUGH_FIELD_NAME}
-          value={ingredients[DOUGH_FIELD_NAME]}
+          name="dough"
+          value={ingredients['dough']}
           options={pizzaDoughFieldOptions}
           onChange={handleChange}
         />
-        <RadioButtonField
+        <RadioButtonGroupField
           label="Выберите соус"
-          name={SAUCE_FIELD_NAME}
-          value={ingredients[SAUCE_FIELD_NAME]}
+          name="sauce"
+          value={ingredients['sauce']}
           options={pizzaSauceFieldOptions}
           onChange={handleChange}
         />
-        <RadioButtonField
+        <RadioButtonGroupField
           label="Сыр"
-          name={CHEESE_FIELD_NAME}
-          value={ingredients[CHEESE_FIELD_NAME]}
+          name="cheese"
+          value={ingredients['cheese']}
           options={pizzaCheesesFieldOptions}
           onChange={handleChange}
         />
-        <RadioButtonField
+        <RadioButtonGroupField
           label="Овощи"
-          name={VEGETABLES_FIELD_NAME}
-          value={ingredients[VEGETABLES_FIELD_NAME]}
+          name="vegetables"
+          value={ingredients['vegetables']}
           options={pizzaVegetablesFieldOptions}
           onChange={handleChange}
         />
-        <RadioButtonField
+        <RadioButtonGroupField
           label="Мясо"
-          name={MEAT_FIELD_NAME}
-          value={ingredients[MEAT_FIELD_NAME]}
+          name="meat"
+          value={ingredients['meat']}
           options={pizzaMeatFieldOptions}
           onChange={handleChange}
         />
