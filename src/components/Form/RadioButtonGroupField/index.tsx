@@ -16,7 +16,7 @@ type Props = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const RadioButtonGroup = ({ label, options, name, value, onChange }: Props): JSX.Element => (
+const RadioButtonGroupField = ({ label, options, name, value, onChange }: Props): JSX.Element => (
   <div className={styles.container}>
     <p className={styles.title}>{label}:</p>
     <div>
@@ -38,4 +38,4 @@ const RadioButtonGroup = ({ label, options, name, value, onChange }: Props): JSX
   </div>
 );
 
-export default RadioButtonGroup;
+export default RadioButtonGroupField;
