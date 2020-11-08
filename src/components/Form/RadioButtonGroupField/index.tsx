@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from './styles.module.css';
 import toString from 'lodash/toString';
 
 import styles from './styles.module.css';
@@ -17,14 +16,14 @@ type Props = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const RadioButtonGroup = ({ label, options, name, value, onChange }: Props) => (
+const RadioButtonGroup = ({ label, options, name, value, onChange }: Props): JSX.Element => (
   <div className={styles.container}>
     <p className={styles.title}>{label}:</p>
     <div>
       {options.map((option) => (
         <label key={option.id} className={styles.label} htmlFor={option.id}>
           <input
-            className={classes.option}
+            className={styles.option}
             type="radio"
             id={option.id}
             name={name}

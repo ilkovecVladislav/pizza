@@ -26,6 +26,7 @@ const getIngredientLabel = (
   switch (ingredientName) {
     case 'size': {
       const option = getOptionByValue(pizzaSizeFieldOptions, ingredientValue);
+
       return option?.label;
     }
     case 'dough': {
@@ -33,22 +34,27 @@ const getIngredientLabel = (
       if (option && option.label && isString(option.label)) {
         return `на ${toLower(option.label)} тесте`;
       }
+
       return null;
     }
     case 'sauce': {
       const option = getOptionByValue(pizzaSauceFieldOptions, ingredientValue);
+
       return option?.label;
     }
     case 'cheese': {
       const option = getOptionByValue(pizzaCheesesFieldOptions, ingredientValue);
+
       return option?.label;
     }
     case 'vegetables': {
       const option = getOptionByValue(pizzaVegetablesFieldOptions, ingredientValue);
+
       return option?.label;
     }
     case 'meat': {
       const option = getOptionByValue(pizzaMeatFieldOptions, ingredientValue);
+
       return option?.label;
     }
     default:
@@ -69,10 +75,11 @@ const useOrderDescription = ({ ingredients, allPizzaParams }: Params): string =>
       if (ingredientValue) {
         return getIngredientLabel(ingredientName, ingredientValue);
       }
+
       return null;
     });
 
     return compact(result).join(', ');
-  }, [ingredients]);
+  }, [ingredients, allPizzaParams]);
 
 export default useOrderDescription;

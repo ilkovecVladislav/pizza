@@ -14,13 +14,13 @@ import {
 import useCalculatePizzaPrice from './priceCalcHooks';
 import useOrderDescription from './orderDescriptionHooks';
 
-const PizzaConstructor = () => {
+const PizzaConstructor = (): JSX.Element => {
   const [ingredients, setIngredients] = useState<{ [key: string]: string | number }>({
     size: '30',
     dough: 'thin',
   });
 
-  const handleChange = useCallback(({ target }) => {
+  const handleChange = useCallback(({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
     setIngredients((prevState) => ({ ...prevState, [name]: value }));
   }, []);
@@ -48,42 +48,42 @@ const PizzaConstructor = () => {
         <RadioButtonGroupField
           label="Размер"
           name="size"
-          value={ingredients['size']}
+          value={ingredients.size}
           options={pizzaSizeFieldOptions}
           onChange={handleChange}
         />
         <RadioButtonGroupField
           label="Тесто"
           name="dough"
-          value={ingredients['dough']}
+          value={ingredients.dough}
           options={pizzaDoughFieldOptions}
           onChange={handleChange}
         />
         <RadioButtonGroupField
           label="Выберите соус"
           name="sauce"
-          value={ingredients['sauce']}
+          value={ingredients.sauce}
           options={pizzaSauceFieldOptions}
           onChange={handleChange}
         />
         <RadioButtonGroupField
           label="Сыр"
           name="cheese"
-          value={ingredients['cheese']}
+          value={ingredients.cheese}
           options={pizzaCheesesFieldOptions}
           onChange={handleChange}
         />
         <RadioButtonGroupField
           label="Овощи"
           name="vegetables"
-          value={ingredients['vegetables']}
+          value={ingredients.vegetables}
           options={pizzaVegetablesFieldOptions}
           onChange={handleChange}
         />
         <RadioButtonGroupField
           label="Мясо"
           name="meat"
-          value={ingredients['meat']}
+          value={ingredients.meat}
           options={pizzaMeatFieldOptions}
           onChange={handleChange}
         />
