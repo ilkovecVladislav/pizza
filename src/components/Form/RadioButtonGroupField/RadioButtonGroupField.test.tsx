@@ -18,7 +18,7 @@ const options = [
 
 describe('RadioButtonGroupField', () => {
   it('renders RadioButtonGroupField', () => {
-    const { getAllByText, queryByLabelText } = render(
+    const { getByText, getByLabelText } = render(
       <RadioButtonGroupField
         label="Size"
         name="size"
@@ -27,13 +27,13 @@ describe('RadioButtonGroupField', () => {
         onChange={() => undefined}
       />,
     );
-    expect(getAllByText('Size:')).toBeTruthy();
-    expect(queryByLabelText('30 см')).toBeTruthy();
-    expect(queryByLabelText('35 см')).toBeTruthy();
+    expect(getByText(/Size/i)).toBeTruthy();
+    expect(getByLabelText('30 см')).toBeTruthy();
+    expect(getByLabelText('35 см')).toBeTruthy();
   });
   it('input updates', () => {
     const mockOnChange = jest.fn();
-    const { queryByLabelText } = render(
+    const { getByLabelText } = render(
       <RadioButtonGroupField
         label="Size"
         name="size"
@@ -43,7 +43,7 @@ describe('RadioButtonGroupField', () => {
       />,
     );
 
-    const radioButton = queryByLabelText('35 см') as HTMLElement;
+    const radioButton = getByLabelText('35 см');
 
     fireEvent.click(radioButton);
     expect(mockOnChange).toHaveBeenCalled();
