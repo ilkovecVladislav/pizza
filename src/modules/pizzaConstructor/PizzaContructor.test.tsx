@@ -69,12 +69,12 @@ describe('PizzaConstructor', () => {
     expect(getByText(/258/i)).toBeTruthy();
   });
   it('change pizza vegetables', () => {
-    const { getByText, getByLabelText, getAllByText } = render(<PizzaConstructor />);
-    const tomatoRadioButton = getAllByText('Помидор');
+    const { getByText, getByLabelText } = render(<PizzaConstructor />);
+    const tomatoRadioButton = getByLabelText('Помидор');
     const mushroomsRadioButton = getByLabelText('Грибы');
     const pepperRadioButton = getByLabelText('Перец');
 
-    expect(tomatoRadioButton[0].checked).toBeFalsy();
+    expect(tomatoRadioButton.checked).toBeFalsy();
     expect(mushroomsRadioButton.checked).toBeFalsy();
     expect(pepperRadioButton.checked).toBeFalsy();
 
