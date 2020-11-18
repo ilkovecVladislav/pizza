@@ -28,6 +28,7 @@ module.exports = {
     assets: './src/assets',
     modules: './src/modules',
     pages: './src/pages',
+    routers: './src/routers',
     types: './src/types',
   },
 };

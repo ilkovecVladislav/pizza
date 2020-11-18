@@ -10,9 +10,11 @@
     "commit": "git-cz"
   },
   "dependencies": {
+    "history": "^5.0.0",
     "lodash": "^4.17.20",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@snowpack/app-scripts-react": "^1.12.6",
@@ -23,9 +25,11 @@
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.0.0",
     "@types/chai": "^4.2.13",
+    "@types/history": "^4.7.8",
     "@types/lodash": "^4.14.165",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.6",
     "@types/snowpack-env": "^2.3.0",
     "@types/webpack-env": "^1.15.3",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
