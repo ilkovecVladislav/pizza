@@ -26,6 +26,7 @@ const PizzaConstructor = (): JSX.Element => {
   }, []);
 
   const price = useCalculatePizzaPrice({ ingredients, allPizzaParams: ALL_PIZZA_PARAMS_ARR });
+
   const orderDescription = useOrderDescription({
     ingredients,
     allPizzaParams: ALL_PIZZA_PARAMS_ARR,

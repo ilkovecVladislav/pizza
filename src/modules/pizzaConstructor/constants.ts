@@ -28,7 +28,7 @@ const pizzaDoughFieldOptions = [
 ];
 const pizzaSauceFieldOptions = [
   {
-    id: 'tomato',
+    id: 'tomato-sauce',
     value: 'tomato',
     label: 'Томатный',
   },

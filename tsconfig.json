@@ -7,7 +7,13 @@
     "jsx": "preserve",
     "baseUrl": "./src",
     /* paths - If you configure Snowpack import aliases, add them here. */
-    "paths": {},
+    "paths": {
+      "components": ["./src/components"],
+      "assets": ["./src/assets"],
+      "modules": ["./src/modules"],
+      "pages": ["./src/pages"],
+      "types": ["./src/types"]
+    },
     /* noEmit - Snowpack builds (emits) files, not tsc. */
     "noEmit": true,
     /* Additional Options */

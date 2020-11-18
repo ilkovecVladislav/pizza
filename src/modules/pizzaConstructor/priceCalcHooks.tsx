@@ -17,14 +17,14 @@ const useCalculatePizzaPrice = ({ ingredients, allPizzaParams }: Params): number
 
     allPizzaParams.forEach((ingredientName) => {
       if (
-        Object.prototype.hasOwnProperty.call(ingredients, 'ingredientName') &&
+        Object.prototype.hasOwnProperty.call(ingredients, ingredientName) &&
         ingredientName === SIZE_FIELD_NAME
       ) {
         if (ingredients[ingredientName] === BIG_PIZZA_SIZE_VALUE) {
           result += BIG_PIZZA_SIZE_PRICE;
         }
       } else if (
-        Object.prototype.hasOwnProperty.call(ingredients, 'ingredientName') &&
+        Object.prototype.hasOwnProperty.call(ingredients, ingredientName) &&
         ingredientName !== SIZE_FIELD_NAME
       ) {
         result += ADDITIONAL_INGREDIENT;
