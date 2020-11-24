@@ -27,5 +27,7 @@ module.exports = {
   moduleNameMapper: {
     '^components(.*)$': '<rootDir>/src/components$1',
     '^assets(.*)$': '<rootDir>/src/assets$1',
+    '^pages(.*)$': '<rootDir>/src/pages$1',
+    '^modules(.*)$': '<rootDir>/src/modules$1',
   },
 };

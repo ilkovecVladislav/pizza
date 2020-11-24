@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import RadioButtonGroupField from 'components/Form/RadioButtonGroupField';
 import pepperoniImg from 'assets/images/pepperoni.jpg';
@@ -15,6 +16,7 @@ import useCalculatePizzaPrice from './priceCalcHooks';
 import useOrderDescription from './orderDescriptionHooks';
 
 const PizzaConstructor = (): JSX.Element => {
+  const history = useHistory();
   const [ingredients, setIngredients] = useState<{ [key: string]: string | number }>({
     size: '30',
     dough: 'thin',
@@ -32,13 +34,13 @@ const PizzaConstructor = (): JSX.Element => {
     allPizzaParams: ALL_PIZZA_PARAMS_ARR,
   });
 
-  const handleSubmit = useCallback(
-    (event: React.FormEvent) => {
-      event.preventDefault();
-      alert(`Ваш заказ: Пицца ${orderDescription}. Итоговая цена: ${price}`);
-    },
-    [price, orderDescription],
-  );
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    history.push('/order-checkout', {
+      price,
+      description: orderDescription,
+    });
+  };
 
   return (
     <div className="pizza__constructor">
@@ -90,6 +92,9 @@ const PizzaConstructor = (): JSX.Element => {
         />
         <button type="submit">Заказать за {price} руб.</button>
       </form>
+      <Link to="/orders-history">
+        <button type="button">История заказов</button>
+      </Link>
     </div>
   );
 };
