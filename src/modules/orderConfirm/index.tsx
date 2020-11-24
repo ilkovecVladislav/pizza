@@ -12,7 +12,7 @@ const OrderConfirm = (): JSX.Element => {
       <h3>Спасибо за заказ!</h3>
       <div>
         <h5>Ленивая Маргарита</h5>
-        <p>{state?.description || ''}</p>
+        <p>{state?.description}</p>
       </div>
     </div>
   );

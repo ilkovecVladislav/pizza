@@ -34,16 +34,13 @@ const PizzaConstructor = (): JSX.Element => {
     allPizzaParams: ALL_PIZZA_PARAMS_ARR,
   });
 
-  const handleSubmit = useCallback(
-    (event: React.FormEvent) => {
-      event.preventDefault();
-      history.push('/order-checkout', {
-        price,
-        description: orderDescription,
-      });
-    },
-    [history, price, orderDescription],
-  );
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    history.push('/order-checkout', {
+      price,
+      description: orderDescription,
+    });
+  };
 
   return (
     <div className="pizza__constructor">
