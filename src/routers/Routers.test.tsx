@@ -4,14 +4,19 @@ import { createMemoryHistory } from 'history';
 import { render, fireEvent } from '@testing-library/react';
 import App from '.';
 
+const renderWithRouter = (component, route = '/') => {
+  const history = createMemoryHistory({ initialEntries: [route] });
+  const Wrapper = ({ children }) => <Router history={history}>{children}</Router>;
+
+  return {
+    ...render(component, { wrapper: Wrapper }),
+    history,
+  };
+};
+
 describe('App', () => {
   it('navigates to registration page', () => {
-    const history = createMemoryHistory();
-    const { container, getByText } = render(
-      <Router history={history}>
-        <App />
-      </Router>,
-    );
+    const { container, getByText } = renderWithRouter(<App />);
 
     expect(container.innerHTML).toMatch('Авторизация');
 
@@ -21,48 +26,23 @@ describe('App', () => {
   });
 
   it('navigates to home page', () => {
-    const history = createMemoryHistory();
-    const { container, getByText } = render(
-      <Router history={history}>
-        <App />
-      </Router>,
-    );
-
-    history.push('/registration');
+    const { container } = renderWithRouter(<App />, '/registration');
 
     expect(container.innerHTML).toMatch('Регистрация');
-
-    fireEvent.click(getByText(/зарегистрироваться/i));
-
-    expect(container.innerHTML).toMatch('История заказов');
   });
 
   it('navigates to order checkout page', () => {
-    const history = createMemoryHistory();
-    const { container, getByText } = render(
-      <Router history={history}>
-        <App />
-      </Router>,
-    );
+    const { container, getByText } = renderWithRouter(<App />, '/home');
 
-    history.push('/home');
-
-    expect(container.innerHTML).toMatch('Заказать');
+    expect(getByText(/История заказов/i)).toBeInTheDocument();
 
     fireEvent.click(getByText(/заказать/i));
 
     expect(container.innerHTML).toMatch('Оформление заказа');
   });
 
-  xit('navigates to orders list page', () => {
-    const history = createMemoryHistory();
-    const { container, getByText } = render(
-      <Router history={history}>
-        <App />
-      </Router>,
-    );
-
-    history.push('/home');
+  it('navigates to orders list page', () => {
+    const { container, getByText } = renderWithRouter(<App />, '/home');
 
     expect(container.innerHTML).toMatch('Заказать');
 

@@ -20,6 +20,7 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+
     'prettier',
     'prettier/react',
     'prettier/@typescript-eslint',
@@ -39,7 +40,12 @@ module.exports = {
   rules: {
     'padding-line-between-statements': ['warn', { blankLine: 'always', prev: '*', next: 'return' }],
     'arrow-body-style': 'warn',
+    'react/require-default-props': 'off',
+    'require-await': 'off',
+    '@typescript-eslint/require-await': 'off',
     'linebreak-style': 'off',
+    'no-param-reassign': 'off',
+    '@typescript-eslint/unbound-method': 'off',
     'prettier/prettier': ['error'],
     'max-len': [
       'warn',
