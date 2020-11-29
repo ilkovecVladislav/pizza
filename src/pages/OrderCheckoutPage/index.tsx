@@ -1,7 +1,31 @@
 import React from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
-import OrderCheckout from 'modules/orderCheckout';
+import Form from './Form';
 
-const OrderCheckoutPage = (): JSX.Element => <OrderCheckout />;
+const OrderCheckout = (): JSX.Element => {
+  const history = useHistory();
+  const { state }: { state?: { price?: number; description?: string } } = useLocation();
 
-export default OrderCheckoutPage;
+  const handleGoBack = () => history.goBack();
+
+  const onSubmit = () => {
+    history.push('/order-confirm');
+  };
+
+  return (
+    <div>
+      <button type="button" onClick={handleGoBack}>
+        Назад
+      </button>
+      <h3>Оформление заказа</h3>
+      <div>
+        <h5>Ленивая Маргарита</h5>
+        <p>{state?.description || ''}</p>
+      </div>
+      <Form price={state?.price} formSubmit={onSubmit} />
+    </div>
+  );
+};
+
+export default OrderCheckout;

@@ -19,13 +19,7 @@ const options = [
 describe('RadioButtonGroupField', () => {
   it('renders RadioButtonGroupField', () => {
     const { getByText, getByLabelText } = render(
-      <RadioButtonGroupField
-        label="Size"
-        name="size"
-        options={options}
-        value={null}
-        onChange={() => undefined}
-      />,
+      <RadioButtonGroupField label="Size" name="size" options={options} />,
     );
     expect(getByText(/Size/i)).toBeTruthy();
     expect(getByLabelText('30 см')).toBeTruthy();
