@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { cardMoths, cardYears } from './constants';
+import { cardMonths, cardYears } from './constants';
 
 const schema = yup.object().shape({
   address: yup
@@ -120,7 +120,7 @@ const Form = ({ price = 0, formSubmit }: Props): JSX.Element => {
                 name="cardMonth"
                 ref={register}
               >
-                {cardMoths.map((month) => (
+                {cardMonths.map((month) => (
                   <option key={month} value={month}>
                     {month}
                   </option>

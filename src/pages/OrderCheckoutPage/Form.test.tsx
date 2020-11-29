@@ -16,7 +16,7 @@ describe('Form', () => {
   });
 
   describe('on submit', () => {
-    it('validates that address is  filled in', async () => {
+    it('validates that address is filled in', async () => {
       const { getByText } = render(<Form formSubmit={() => undefined} />);
 
       await act(async () => {

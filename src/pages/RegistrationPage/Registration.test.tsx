@@ -20,7 +20,7 @@ describe('Registration', () => {
   });
 
   describe('on submit', () => {
-    it('validates that email is  filled in', async () => {
+    it('validates that email is filled in', async () => {
       const history = createMemoryHistory();
       const { getByText } = render(
         <Router history={history}>

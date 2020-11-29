@@ -20,7 +20,7 @@ describe('LogIn', () => {
   });
 
   describe('on submit', () => {
-    it('validates that email is  filled in', async () => {
+    it('validates that email is filled in', async () => {
       const history = createMemoryHistory();
       const { getByText } = render(
         <Router history={history}>
@@ -54,7 +54,7 @@ describe('LogIn', () => {
 
       expect(getByText('Неправильный email')).toBeInTheDocument();
     });
-    it('validates that password is  filled in', async () => {
+    it('validates that password is filled in', async () => {
       const history = createMemoryHistory();
       const { getByText } = render(
         <Router history={history}>
