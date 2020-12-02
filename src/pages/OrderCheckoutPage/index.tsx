@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import { postOrder } from 'services/orders';
 import Form from './Form';
 
 const OrderCheckout = (): JSX.Element => {
@@ -9,9 +10,13 @@ const OrderCheckout = (): JSX.Element => {
 
   const handleGoBack = () => history.goBack();
 
-  const onSubmit = () => {
-    history.push('/order-confirm');
-  };
+  const onSubmit = ({ card_number, address }: { card_number: string; address: string }) =>
+    postOrder({
+      card_number,
+      address,
+      name: Math.random().toString(36).slice(2),
+      ingredients: [],
+    }).then(() => history.push('/order-confirm'));
 
   return (
     <div>
