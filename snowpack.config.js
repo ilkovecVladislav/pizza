@@ -30,5 +30,7 @@ module.exports = {
     pages: './src/pages',
     routers: './src/routers',
     types: './src/types',
+    services: './src/services',
+    config: './src/config',
   },
 };

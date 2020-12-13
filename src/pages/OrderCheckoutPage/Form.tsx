@@ -23,7 +23,10 @@ const schema = yup.object().shape({
     .number()
     .positive('Значение квартира должно позитивным')
     .integer('Значение квартира должно целым'),
-  cardNumber: yup.string().required('Номер карты обязательное поле').length(19, 'Не верный формат'),
+  card_number: yup
+    .string()
+    .required('Номер карты обязательное поле')
+    .length(19, 'Не верный формат'),
   cardCode: yup
     .number()
     .positive('Значение CVV должно позитивным')
@@ -48,7 +51,7 @@ type FormValues = {
   entrance?: number;
   floor?: number;
   door?: number;
-  cardNumber: string;
+  card_number: string;
   cardMonth: string;
   cardYear: string;
   cardCode: number;
@@ -103,14 +106,14 @@ const Form = ({ price = 0, formSubmit }: Props): JSX.Element => {
               type="tel"
               inputMode="numeric"
               autoComplete="cc-number"
-              name="cardNumber"
+              name="card_number"
               ref={register}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const { value } = event.target;
                 event.target.value = normalizeCardNumber(value);
               }}
             />
-            {errors.cardNumber && <p>{errors.cardNumber.message}</p>}
+            {errors.card_number && <p>{errors.card_number.message}</p>}
           </div>
           <div className="card-info">
             <div className="card-date">
