@@ -32,5 +32,6 @@ module.exports = {
     types: './src/types',
     services: './src/services',
     config: './src/config',
+    store: './src/store',
   },
 };

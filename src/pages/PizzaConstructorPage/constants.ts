@@ -18,14 +18,14 @@ export const SAUCES = {
 
 export const CHEESES = {
   mozzarella: { label: 'Моцарелла', price: 29 },
-  cheddar: { label: 'Белый', price: 29 },
+  cheddar: { label: 'Чеддер', price: 29 },
   dor_blu: { label: 'Дор блю', price: 29 },
 };
 
 export const VEGETABLES = {
   tomato: { label: 'Помидор', price: 29 },
   mushrooms: { label: 'Грибы', price: 29 },
-  value: { label: 'Перец', price: 29 },
+  pepper: { label: 'Перец', price: 29 },
 };
 
 export const MEAT = {

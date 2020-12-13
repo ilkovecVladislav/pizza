@@ -67,5 +67,14 @@ module.exports = {
       'error',
       { devDependencies: ['**/*.test.ts', '**/*.test.tsx', '**/setupTests.ts'] },
     ],
+    '@typescript-eslint/no-unsafe-member-access': 'off',
   },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 };

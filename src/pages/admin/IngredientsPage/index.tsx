@@ -15,7 +15,7 @@ const Ingredients = (): JSX.Element => {
   return (
     <div>
       <h2>Ingredients</h2>
-      <Link to="/admin/ingredients/new">
+      <Link to="/admin/ingredient/new">
         <button type="button">Добавить ингредиент</button>
       </Link>
       <div>
