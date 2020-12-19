@@ -7,9 +7,6 @@ import PizzaConstructorPage from 'pages/PizzaConstructorPage';
 import OrderCheckoutPage from 'pages/OrderCheckoutPage';
 import OrderConfirmPage from 'pages/OrderConfirmPage';
 import OrdersListPage from 'pages/OrdersListPage';
-import IngredientsPage from 'pages/admin/IngredientsPage';
-import CreateIngredientPage from 'pages/admin/CreateIngredientPage';
-import EditIngredientPage from 'pages/admin/EditIngredientPage';
 import ProtectedRoute from './ProtectedRoute';
 
 const AppRouter = (): JSX.Element => (
@@ -30,15 +27,6 @@ const AppRouter = (): JSX.Element => (
       </ProtectedRoute>
       <ProtectedRoute path="/orders-history">
         <OrdersListPage />
-      </ProtectedRoute>
-      <ProtectedRoute path="/admin/ingredients">
-        <IngredientsPage />
-      </ProtectedRoute>
-      <ProtectedRoute path="/admin/ingredient/new">
-        <CreateIngredientPage />
-      </ProtectedRoute>
-      <ProtectedRoute path="/admin/ingredients/:id">
-        <EditIngredientPage />
       </ProtectedRoute>
       <Redirect to="/" />
     </Switch>
