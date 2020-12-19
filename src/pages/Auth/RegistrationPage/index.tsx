@@ -3,10 +3,17 @@ import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+
+import { logIn } from '../state/actions';
 
 const schema = yup.object().shape({
   email: yup.string().required('Email обязательное поле').email('Неправильный email'),
-  password: yup.string().required('Пароль обязательное поле'),
+  password: yup
+    .string()
+    .required('Пароль обязательное поле')
+    .min(8, 'Пароль должен быть минимум 8 символов')
+    .matches(/[a-zA-Z]/, 'Пароль может содержать только буквы латинского алфавита'),
 });
 
 type FormValues = {
@@ -14,15 +21,17 @@ type FormValues = {
   password: string;
 };
 
-const LogIn = (): JSX.Element => {
+const Registration = (): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, errors } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
   const handleGoBack = () => history.goBack();
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = () => {
+    dispatch(logIn());
     history.push('/home');
   };
 
@@ -31,7 +40,7 @@ const LogIn = (): JSX.Element => {
       <button type="button" onClick={handleGoBack}>
         Назад
       </button>
-      <h3>Авторизация</h3>
+      <h3>Регистрация</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">
           E-mail
@@ -43,13 +52,13 @@ const LogIn = (): JSX.Element => {
           <input ref={register} id="password" type="password" name="password" />
           {errors.password && <p>{errors.password.message}</p>}
         </label>
-        <button type="submit">Войти</button>
-        <Link to="/registration">
-          <button type="button">Зарегистрироваться</button>
+        <button type="submit">Зарегистрироваться</button>
+        <Link to="/">
+          <button type="button">Войти</button>
         </Link>
       </form>
     </div>
   );
 };
 
-export default LogIn;
+export default Registration;

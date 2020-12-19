@@ -9,6 +9,9 @@ const OrderConfirm = (): JSX.Element => {
       <Link to="/home">
         <button type="button">Закрыть</button>
       </Link>
+      <Link to="/orders-history">
+        <button type="button">К списку заказов</button>
+      </Link>
       <h3>Спасибо за заказ!</h3>
       <div>
         <h5>Ленивая Маргарита</h5>

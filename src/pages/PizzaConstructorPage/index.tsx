@@ -1,26 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import map from 'lodash/map';
+import reduce from 'lodash/reduce';
 
 import RadioButtonGroupField from 'components/Form/RadioButtonGroupField';
 import CheckboxField from 'components/Form/CheckboxField';
 import pepperoniImg from 'assets/images/pepperoni.jpg';
+import { loadIngredients, setPizza } from './state/actions';
+import { useIngredients } from './state/selectors';
 import PizzaDescription from './PizzaDescription';
-import {
-  PIZZA_SIZES,
-  DOUGH,
-  SAUCES,
-  CHEESES,
-  VEGETABLES,
-  MEAT,
-  ALL_PIZZA_PARAMS_ARR,
-} from './constants';
+import { PIZZA_SIZES, DOUGH } from './constants';
 import useCalculatePizzaPrice from './priceCalcHooks';
 import type { FormValues } from './types';
 
 const PizzaConstructor = (): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadIngredients());
+  }, [dispatch]);
 
   const { register, handleSubmit, watch } = useForm<FormValues>({
     defaultValues: {
@@ -34,17 +35,26 @@ const PizzaConstructor = (): JSX.Element => {
 
   const formValues = watch();
 
+  const { cheese = [], vegetables = [], sauces = [], meat = [] } = useIngredients();
+
   const price = useCalculatePizzaPrice({
     ingredients: formValues,
-    allPizzaParams: ALL_PIZZA_PARAMS_ARR,
+    sauces,
+    meat,
+    cheese,
+    vegetables,
   });
 
-  const onSubmit = handleSubmit(() => {
-    history.push('/order-checkout', {
-      price,
-      description: '',
-    });
+  const onSubmit = handleSubmit((values) => {
+    dispatch(setPizza(values));
+    history.push('/order-checkout');
   });
+
+  const normalizedSauces = reduce(
+    sauces,
+    (acc, cur) => ({ ...acc, [cur.slug]: { ...cur, label: cur.name } }),
+    {},
+  );
 
   return (
     <div className="pizza__constructor">
@@ -63,43 +73,43 @@ const PizzaConstructor = (): JSX.Element => {
           label="Выберите соус"
           name="sauce"
           register={register}
-          options={SAUCES}
+          options={normalizedSauces}
         />
         <fieldset>
           <legend>Сыр</legend>
-          {map(CHEESES, (option, key) => (
+          {map(cheese, (option) => (
             <CheckboxField
-              key={key}
-              id={key}
-              value={key}
+              key={option.id}
+              id={option.id}
+              value={option.slug}
               name="cheese"
-              label={option.label}
+              label={option.name}
               register={register}
             />
           ))}
         </fieldset>
         <fieldset>
           <legend>Овощи</legend>
-          {map(VEGETABLES, (option, key) => (
+          {map(vegetables, (option) => (
             <CheckboxField
-              key={key}
-              id={key}
-              value={key}
+              key={option.id}
+              id={option.id}
+              value={option.slug}
               name="vegetables"
-              label={option.label}
+              label={option.name}
               register={register}
             />
           ))}
         </fieldset>
         <fieldset>
           <legend>Мясо</legend>
-          {map(MEAT, (option, key) => (
+          {map(meat, (option) => (
             <CheckboxField
-              key={key}
-              id={key}
-              value={key}
+              key={option.id}
+              id={option.id}
+              value={option.slug}
               name="meat"
-              label={option.label}
+              label={option.name}
               register={register}
             />
           ))}

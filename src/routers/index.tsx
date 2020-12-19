@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import RegistrationPage from 'pages/RegistrationPage';
-import LogInPage from 'pages/LogInPage';
+import RegistrationPage from 'pages/Auth/RegistrationPage';
+import LogInPage from 'pages/Auth/LogInPage';
 import PizzaConstructorPage from 'pages/PizzaConstructorPage';
 import OrderCheckoutPage from 'pages/OrderCheckoutPage';
 import OrderConfirmPage from 'pages/OrderConfirmPage';
@@ -10,19 +10,36 @@ import OrdersListPage from 'pages/OrdersListPage';
 import IngredientsPage from 'pages/admin/IngredientsPage';
 import CreateIngredientPage from 'pages/admin/CreateIngredientPage';
 import EditIngredientPage from 'pages/admin/EditIngredientPage';
+import ProtectedRoute from './ProtectedRoute';
 
 const AppRouter = (): JSX.Element => (
   <BrowserRouter>
     <Switch>
       <Route path="/" component={LogInPage} exact />
-      <Route path="/registration" component={RegistrationPage} exact />
-      <Route path="/home" component={PizzaConstructorPage} exact />
-      <Route path="/order-checkout" component={OrderCheckoutPage} exact />
-      <Route path="/order-confirm" component={OrderConfirmPage} exact />
-      <Route path="/orders-history" component={OrdersListPage} exact />
-      <Route path="/admin/ingredients" component={IngredientsPage} exact />
-      <Route path="/admin/ingredients/new" component={CreateIngredientPage} exact />
-      <Route path="/admin/ingredients/:id" component={EditIngredientPage} exact />
+      <ProtectedRoute path="/registration">
+        <RegistrationPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/home">
+        <PizzaConstructorPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/order-checkout">
+        <OrderCheckoutPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/order-confirm">
+        <OrderConfirmPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/orders-history">
+        <OrdersListPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/admin/ingredients">
+        <IngredientsPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/admin/ingredient/new">
+        <CreateIngredientPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/admin/ingredients/:id">
+        <EditIngredientPage />
+      </ProtectedRoute>
       <Redirect to="/" />
     </Switch>
   </BrowserRouter>
