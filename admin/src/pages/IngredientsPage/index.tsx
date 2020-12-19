@@ -14,8 +14,8 @@ const Ingredients = (): JSX.Element => {
 
   return (
     <div>
-      <h2>Ingredients</h2>
-      <Link to="/admin/ingredient/new">
+      <h2>Ингредиенты</h2>
+      <Link to="/ingredient/new">
         <button type="button">Добавить ингредиент</button>
       </Link>
       <div>
@@ -42,10 +42,10 @@ const Ingredients = (): JSX.Element => {
                     <td>{row.price}</td>
                     <td>{row.image}</td>
                     <td>
-                      <Link to={`/admin/ingredients/${row.slug}`}>
+                      <Link to={`/edit/${row.id}`}>
                         <button type="button">Редактировать</button>
                       </Link>
-                      <button type="button" onClick={() => handleDeleteIngredient(row.slug)}>
+                      <button type="button" onClick={() => handleDeleteIngredient(row.id)}>
                         Удалить
                       </button>
                     </td>

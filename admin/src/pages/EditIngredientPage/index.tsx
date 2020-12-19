@@ -3,20 +3,32 @@ import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
 import toString from 'lodash/toString';
-import head from 'lodash/head';
 
 import { putIngredient, getIngredientById } from 'services/ingredients';
-import type Ingredient from 'services/types/Ingredient';
+import type Categories from 'types/Categories';
+
+type FormValues = {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  category: Categories;
+  image: File[];
+};
 
 const EditIngredient = (): JSX.Element => {
   const history = useHistory();
-  const { id } = useParams();
+  const { id }: { id: string } = useParams();
 
-  const { data } = useQuery(['ingredient', id], getIngredientById, {
-    enabled: id,
-  });
+  const { data } = useQuery(
+    ['ingredient', id],
+    (context) => getIngredientById(context.queryKey[1]),
+    {
+      enabled: !!id,
+    },
+  );
 
-  const { register, setValue, handleSubmit } = useForm<Ingredient>({
+  const { register, setValue, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       price: 0,
       category: 'vegetables',
@@ -42,8 +54,7 @@ const EditIngredient = (): JSX.Element => {
     formData.append('category', category);
 
     if (image) {
-      const file = head(image) as File;
-      formData.append('image', file);
+      formData.append('image', image[0]);
     }
 
     return Promise.resolve()

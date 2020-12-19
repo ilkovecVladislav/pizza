@@ -2,14 +2,22 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import toString from 'lodash/toString';
-import head from 'lodash/head';
 
 import { postIngredient } from 'services/ingredients';
-import type Ingredient from 'services/types/Ingredient';
+import type Categories from 'types/Categories';
+
+type FormValues = {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  category: Categories;
+  image: File[];
+};
 
 const CreateIngredient = (): JSX.Element => {
   const history = useHistory();
-  const { register, handleSubmit } = useForm<Ingredient>({
+  const { register, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       price: 0,
       category: 'vegetables',
@@ -26,13 +34,12 @@ const CreateIngredient = (): JSX.Element => {
     formData.append('category', category);
 
     if (image) {
-      const file = head(image) as File;
-      formData.append('image', file);
+      formData.append('image', image[0]);
     }
 
     return Promise.resolve()
       .then(() => postIngredient(formData))
-      .then(() => history.push('/admin/ingredients'));
+      .then(() => history.push('/ingredients'));
   });
 
   return (

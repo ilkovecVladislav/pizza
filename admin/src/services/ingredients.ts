@@ -7,8 +7,10 @@ export const getIngredients = (): Promise<Ingredient[]> => publicGet(BASE_URL);
 
 export const postIngredient = (data: FormData): Promise<void> => publicPost(BASE_URL, data);
 
-export const getIngredientById = (id: string): Promise<Ingredient> =>
-  publicGet(`${BASE_URL}/${id}`);
+export const getIngredientById = (id: string): Promise<Ingredient> => {
+  console.log(id);
+  return publicGet(`${BASE_URL}/${id}`);
+};
 
 export const putIngredient = (id: string, data: FormData): Promise<void> =>
   publicPut(`${BASE_URL}/${id}`, data);
