@@ -1,20 +1,26 @@
-import { UserState, UserActionTypes, LOG_IN, LOG_OUT } from './types';
+import { createSlice } from '@reduxjs/toolkit';
+
+type UserState = {
+  isAuthorized: boolean;
+};
 
 const initialState: UserState = {
   isAuthorized: true,
 };
 
-const userReducer = (state = initialState, action: UserActionTypes): UserState => {
-  switch (action.type) {
-    case LOG_IN: {
-      return { ...state, isAuthorized: true };
-    }
-    case LOG_OUT: {
-      return { ...state, isAuthorized: false };
-    }
-    default:
-      return state;
-  }
-};
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    logIn(state) {
+      state.isAuthorized = true;
+    },
+    logOut(state) {
+      state.isAuthorized = false;
+    },
+  },
+});
 
-export default userReducer;
+export const { logIn } = userSlice.actions;
+
+export default userSlice.reducer;

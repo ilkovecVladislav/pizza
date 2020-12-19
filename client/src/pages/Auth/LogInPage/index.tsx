@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 
-import { logIn } from '../state/actions';
+import { logIn } from '../state/reducer';
 
 const schema = yup.object().shape({
   email: yup.string().required('Email обязательное поле').email('Неправильный email'),

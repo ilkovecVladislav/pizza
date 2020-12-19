@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import AppRouter from 'routers';
 import store from 'store';
+import './index.css';
 
 const queryClient = new QueryClient({});
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
 import toString from 'lodash/toString';
 
@@ -28,6 +28,8 @@ const EditIngredient = (): JSX.Element => {
     },
   );
 
+  const { mutateAsync: updateIngredient } = useMutation(putIngredient);
+
   const { register, setValue, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       price: 0,
@@ -44,7 +46,7 @@ const EditIngredient = (): JSX.Element => {
     }
   }, [data, setValue]);
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit(async (values) => {
     const { image, name, slug, price, category } = values;
     const formData = new FormData();
 
@@ -57,9 +59,8 @@ const EditIngredient = (): JSX.Element => {
       formData.append('image', image[0]);
     }
 
-    return Promise.resolve()
-      .then(() => putIngredient(id, formData))
-      .then(() => history.push('/admin/ingredients'));
+    await updateIngredient({ id, data: formData });
+    history.push('/ingredients');
   });
 
   return (

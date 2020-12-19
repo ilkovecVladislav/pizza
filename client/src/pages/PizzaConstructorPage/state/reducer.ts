@@ -1,9 +1,15 @@
-import {
-  PizzaConstructorState,
-  PizzaConstructorActionTypes,
-  SET_PIZZA,
-  SET_INGREDIENTS,
-} from './types';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import groupBy from 'lodash/groupBy';
+
+import { getIngredients } from 'services/ingredients';
+import type { PizzaIngredients } from './types';
+import type { FormValues } from '../types';
+
+type PizzaConstructorState = {
+  pizza: FormValues;
+  ingredients: PizzaIngredients;
+  isLoadingIngredients: boolean;
+};
 
 const initialState: PizzaConstructorState = {
   pizza: {
@@ -14,22 +20,38 @@ const initialState: PizzaConstructorState = {
     meat: [],
   },
   ingredients: {},
+  isLoadingIngredients: false,
 };
 
-const pizzaConstructorReducer = (
-  state = initialState,
-  action: PizzaConstructorActionTypes,
-): PizzaConstructorState => {
-  switch (action.type) {
-    case SET_PIZZA: {
-      return { ...state, pizza: action.payload };
-    }
-    case SET_INGREDIENTS: {
-      return { ...state, ingredients: action.payload };
-    }
-    default:
-      return state;
-  }
-};
+export const loadIngredients = createAsyncThunk('pizzaConstructor/loadIngredients', async () => {
+  const result = await getIngredients();
 
-export default pizzaConstructorReducer;
+  return groupBy(result, 'category');
+});
+
+const pizzaConstructorSlice = createSlice({
+  name: 'pizzaConstructor',
+  initialState,
+  reducers: {
+    setPizza(state, action: PayloadAction<FormValues>) {
+      state.pizza = action.payload;
+    },
+    setIngredients(state, action: PayloadAction<PizzaIngredients>) {
+      state.ingredients = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadIngredients.pending, (state) => {
+        state.isLoadingIngredients = true;
+      })
+      .addCase(loadIngredients.fulfilled, (state, action: PayloadAction<PizzaIngredients>) => {
+        state.isLoadingIngredients = false;
+        state.ingredients = action.payload;
+      });
+  },
+});
+
+export const { setPizza, setIngredients } = pizzaConstructorSlice.actions;
+
+export default pizzaConstructorSlice.reducer;
