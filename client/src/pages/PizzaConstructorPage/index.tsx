@@ -160,21 +160,16 @@ const PizzaConstructor = (): JSX.Element => {
               <RadioButtonGroupField
                 label="Размер"
                 name="size"
-                register={register}
+                ref={register}
                 options={PIZZA_SIZES}
               />
-              <RadioButtonGroupField
-                label="Тесто"
-                name="dough"
-                register={register}
-                options={DOUGH}
-              />
+              <RadioButtonGroupField label="Тесто" name="dough" ref={register} options={DOUGH} />
             </PizzaParamsWrapper>
             <SauceWrapper>
               <RadioButtonGroupField
                 label="Выберите соус"
                 name="sauce"
-                register={register}
+                ref={register}
                 options={normalizedSauces}
               />
             </SauceWrapper>

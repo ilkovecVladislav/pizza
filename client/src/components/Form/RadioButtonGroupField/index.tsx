@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import map from 'lodash/map';
 import styled from 'styled-components';
 
@@ -51,7 +51,6 @@ const Radio = styled.label`
 type Props = {
   label: string;
   name: string;
-  register: any;
   options: {
     [key: string]: {
       label: string;
@@ -59,18 +58,20 @@ type Props = {
   };
 };
 
-const RadioButtonGroupField = ({ label, options, name, register }: Props): JSX.Element => (
-  <div>
-    <Title>{label}</Title>
-    <RadioButtonContainer>
-      {map(options, (option, key) => (
-        <Radio key={key}>
-          <input ref={register} type="radio" name={name} value={key} />
-          <span className="radio-btn">{option.label}</span>
-        </Radio>
-      ))}
-    </RadioButtonContainer>
-  </div>
+const RadioButtonGroupField = forwardRef<HTMLInputElement, Props>(
+  ({ label, options, name }, ref): JSX.Element => (
+    <div>
+      <Title>{label}</Title>
+      <RadioButtonContainer>
+        {map(options, (option, key) => (
+          <Radio key={key}>
+            <input ref={ref} type="radio" name={name} value={key} />
+            <span className="radio-btn">{option.label}</span>
+          </Radio>
+        ))}
+      </RadioButtonContainer>
+    </div>
+  ),
 );
 
 export default RadioButtonGroupField;

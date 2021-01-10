@@ -176,6 +176,7 @@ const OrderCard = ({ order, ingredients, date, status }: Props): JSX.Element => 
           name: ingredient.name,
         };
       }
+
       return null;
     }),
   );

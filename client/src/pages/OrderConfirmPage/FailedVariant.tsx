@@ -64,18 +64,16 @@ const Error = styled.div`
   }
 `;
 
-const FailedVariant = (): JSX.Element => {
-  return (
-    <Container>
-      <Error />
-      <h3 className="text">Оплата не прошла</h3>
-      <p className="description">Попробуйте еще раз или используйте другую карту</p>
+const FailedVariant = (): JSX.Element => (
+  <Container>
+    <Error />
+    <h3 className="text">Оплата не прошла</h3>
+    <p className="description">Попробуйте еще раз или используйте другую карту</p>
 
-      <Link to="/order-checkout">
-        <button type="button">Попробовать еще раз</button>
-      </Link>
-    </Container>
-  );
-};
+    <Link to="/order-checkout">
+      <button type="button">Попробовать еще раз</button>
+    </Link>
+  </Container>
+);
 
 export default FailedVariant;
