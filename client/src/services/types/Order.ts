@@ -1,4 +1,5 @@
 type Order = {
+  id: string;
   ingredients: string[];
   name: string;
   address: string;

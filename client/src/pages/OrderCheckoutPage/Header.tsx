@@ -45,7 +45,7 @@ const Container = styled.div`
 const Header = (): JSX.Element => (
   <Container>
     <Link to="/home">
-      <button type="button"></button>
+      <button type="button" />
     </Link>
     <h3 className="title">Оформление заказа</h3>
   </Container>

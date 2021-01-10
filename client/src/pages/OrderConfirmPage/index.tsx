@@ -59,7 +59,7 @@ const OrderConfirm = (): JSX.Element => {
       <Header>
         <h2>Оформление заказа</h2>
         <Link to="/orders-history">
-          <button className="close-btn" type="button"></button>
+          <button className="close-btn" type="button" />
         </Link>
       </Header>
 

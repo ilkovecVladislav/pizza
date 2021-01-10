@@ -99,7 +99,7 @@ const OrdersList = (): JSX.Element => {
     <div>
       <Header>
         <Link to="/home">
-          <button type="button"></button>
+          <button type="button" />
         </Link>
         <h2>Мои заказы</h2>
       </Header>
@@ -107,6 +107,7 @@ const OrdersList = (): JSX.Element => {
         <Container>
           {data.reverse().map((item, index) => (
             <OrderCard
+              key={item.id}
               order={item}
               ingredients={ingredients}
               date={getDate(index)}
