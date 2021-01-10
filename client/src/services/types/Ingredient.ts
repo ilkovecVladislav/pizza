@@ -4,9 +4,10 @@ type Ingredient = {
   id: string;
   name: string;
   slug: string;
-  price: number;
+  price: string;
   category: Categories;
   image: string;
+  thumbnail: string;
 };
 
 export default Ingredient;

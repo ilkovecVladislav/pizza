@@ -42,11 +42,18 @@ module.exports = {
     'arrow-body-style': 'warn',
     'react/require-default-props': 'off',
     'require-await': 'off',
+    'react/display-name': 'off',
     '@typescript-eslint/require-await': 'off',
     'linebreak-style': 'off',
     'no-param-reassign': 'off',
     '@typescript-eslint/unbound-method': 'off',
     'prettier/prettier': ['error'],
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
     'max-len': [
       'warn',
       {

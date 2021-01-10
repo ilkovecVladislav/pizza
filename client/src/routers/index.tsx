@@ -22,7 +22,7 @@ const AppRouter = (): JSX.Element => (
       <ProtectedRoute path="/order-checkout">
         <OrderCheckoutPage />
       </ProtectedRoute>
-      <ProtectedRoute path="/order-confirm">
+      <ProtectedRoute path="/order-confirm/:status?">
         <OrderConfirmPage />
       </ProtectedRoute>
       <ProtectedRoute path="/orders-history">

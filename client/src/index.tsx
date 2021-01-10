@@ -14,7 +14,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root'),
 );
-
-if (import.meta.hot) {
-  import.meta.hot?.accept();
-}
