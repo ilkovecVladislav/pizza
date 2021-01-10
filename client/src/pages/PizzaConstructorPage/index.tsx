@@ -4,12 +4,13 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import map from 'lodash/map';
 import reduce from 'lodash/reduce';
+import isEmpty from 'lodash/isEmpty';
 
 import RadioButtonGroupField from 'components/Form/RadioButtonGroupField';
 import CheckboxField from 'components/Form/CheckboxField';
 import pepperoniImg from 'assets/images/pepperoni.jpg';
-import { loadIngredients, setPizza } from './state/actions';
-import { useIngredients } from './state/selectors';
+import { loadIngredients, setPizza } from './state/reducer';
+import { useIngredients, useIsIngredientsLoading } from './state/selectors';
 import PizzaDescription from './PizzaDescription';
 import { PIZZA_SIZES, DOUGH } from './constants';
 import useCalculatePizzaPrice from './priceCalcHooks';
@@ -35,7 +36,9 @@ const PizzaConstructor = (): JSX.Element => {
 
   const formValues = watch();
 
-  const { cheese = [], vegetables = [], sauces = [], meat = [] } = useIngredients();
+  const allIngredients = useIngredients();
+
+  const { cheese = [], vegetables = [], sauces = [], meat = [] } = allIngredients;
 
   const price = useCalculatePizzaPrice({
     ingredients: formValues,
@@ -55,67 +58,71 @@ const PizzaConstructor = (): JSX.Element => {
     (acc, cur) => ({ ...acc, [cur.slug]: { ...cur, label: cur.name } }),
     {},
   );
+  const isLoadingIngredients = useIsIngredientsLoading();
 
   return (
     <div className="pizza__constructor">
       <img className="pizza__img" src={pepperoniImg} alt="Pepperoni" />
       <h4 className="pizza__name">Pepperoni</h4>
       <PizzaDescription data={formValues} />
-      <form onSubmit={onSubmit}>
-        <RadioButtonGroupField
-          label="Размер"
-          name="size"
-          register={register}
-          options={PIZZA_SIZES}
-        />
-        <RadioButtonGroupField label="Тесто" name="dough" register={register} options={DOUGH} />
-        <RadioButtonGroupField
-          label="Выберите соус"
-          name="sauce"
-          register={register}
-          options={normalizedSauces}
-        />
-        <fieldset>
-          <legend>Сыр</legend>
-          {map(cheese, (option) => (
-            <CheckboxField
-              key={option.id}
-              id={option.id}
-              value={option.slug}
-              name="cheese"
-              label={option.name}
-              register={register}
-            />
-          ))}
-        </fieldset>
-        <fieldset>
-          <legend>Овощи</legend>
-          {map(vegetables, (option) => (
-            <CheckboxField
-              key={option.id}
-              id={option.id}
-              value={option.slug}
-              name="vegetables"
-              label={option.name}
-              register={register}
-            />
-          ))}
-        </fieldset>
-        <fieldset>
-          <legend>Мясо</legend>
-          {map(meat, (option) => (
-            <CheckboxField
-              key={option.id}
-              id={option.id}
-              value={option.slug}
-              name="meat"
-              label={option.name}
-              register={register}
-            />
-          ))}
-        </fieldset>
-        <button type="submit">Заказать за {price} руб.</button>
-      </form>
+      {isLoadingIngredients && <span>Loading</span>}
+      {!isLoadingIngredients && !isEmpty(allIngredients) && (
+        <form onSubmit={onSubmit}>
+          <RadioButtonGroupField
+            label="Размер"
+            name="size"
+            register={register}
+            options={PIZZA_SIZES}
+          />
+          <RadioButtonGroupField label="Тесто" name="dough" register={register} options={DOUGH} />
+          <RadioButtonGroupField
+            label="Выберите соус"
+            name="sauce"
+            register={register}
+            options={normalizedSauces}
+          />
+          <fieldset>
+            <legend>Сыр</legend>
+            {map(cheese, (option) => (
+              <CheckboxField
+                key={option.id}
+                id={option.id}
+                value={option.slug}
+                name="cheese"
+                label={option.name}
+                register={register}
+              />
+            ))}
+          </fieldset>
+          <fieldset>
+            <legend>Овощи</legend>
+            {map(vegetables, (option) => (
+              <CheckboxField
+                key={option.id}
+                id={option.id}
+                value={option.slug}
+                name="vegetables"
+                label={option.name}
+                register={register}
+              />
+            ))}
+          </fieldset>
+          <fieldset>
+            <legend>Мясо</legend>
+            {map(meat, (option) => (
+              <CheckboxField
+                key={option.id}
+                id={option.id}
+                value={option.slug}
+                name="meat"
+                label={option.name}
+                register={register}
+              />
+            ))}
+          </fieldset>
+          <button type="submit">Заказать за {price} руб.</button>
+        </form>
+      )}
       <Link to="/orders-history">
         <button type="button">История заказов</button>
       </Link>

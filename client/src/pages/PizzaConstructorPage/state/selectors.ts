@@ -9,3 +9,6 @@ export const usePizzaData = (): FormValues =>
 
 export const useIngredients = (): PizzaIngredients =>
   useSelector((state: RootState) => state.pizzaConstructor.ingredients);
+
+export const useIsIngredientsLoading = (): boolean =>
+  useSelector((state: RootState) => state.pizzaConstructor.isLoadingIngredients);

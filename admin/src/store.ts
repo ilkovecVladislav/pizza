@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import userReducer from 'pages/LogInPage/state/reducer';

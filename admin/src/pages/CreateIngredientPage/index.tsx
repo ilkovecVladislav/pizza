@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import toString from 'lodash/toString';
+import { useMutation } from 'react-query';
 
 import { postIngredient } from 'services/ingredients';
 import type Categories from 'types/Categories';
@@ -24,7 +25,9 @@ const CreateIngredient = (): JSX.Element => {
     },
   });
 
-  const onSubmit = handleSubmit((values) => {
+  const { mutateAsync: createIngredient } = useMutation(postIngredient);
+
+  const onSubmit = handleSubmit(async (values) => {
     const { image, name, slug, price, category } = values;
     const formData = new FormData();
 
@@ -37,9 +40,8 @@ const CreateIngredient = (): JSX.Element => {
       formData.append('image', image[0]);
     }
 
-    return Promise.resolve()
-      .then(() => postIngredient(formData))
-      .then(() => history.push('/ingredients'));
+    await createIngredient(formData);
+    history.push('/ingredients');
   });
 
   return (
