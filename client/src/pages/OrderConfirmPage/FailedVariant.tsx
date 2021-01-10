@@ -72,7 +72,7 @@ const FailedVariant = (): JSX.Element => {
       <p className="description">Попробуйте еще раз или используйте другую карту</p>
 
       <Link to="/order-checkout">
-        <button>Попробовать еще раз</button>
+        <button type="button">Попробовать еще раз</button>
       </Link>
     </Container>
   );

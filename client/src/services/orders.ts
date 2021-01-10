@@ -5,4 +5,9 @@ const BASE_URL = '/orders';
 
 export const getOrders = (): Promise<Order[]> => publicGet(BASE_URL);
 
-export const postOrder = (data: Order): Promise<void> => publicPost(BASE_URL, data);
+export const postOrder = (data: {
+  ingredients: string[];
+  name: string;
+  address: string;
+  card_number: string;
+}): Promise<void> => publicPost(BASE_URL, data);
