@@ -61,6 +61,7 @@ const RenderIngredient = ({ data, options }: RenderIngredientProps): JSX.Element
           />
         );
       }
+
       return null;
     })}
   </>

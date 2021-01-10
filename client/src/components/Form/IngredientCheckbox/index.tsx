@@ -88,25 +88,23 @@ type Props = {
 };
 
 const IngredientCheckbox = forwardRef<HTMLInputElement, Props>(
-  ({ name, option }, ref): JSX.Element => {
-    return (
-      <Container>
-        <img
-          className="thumb"
-          src={`${process.env.REACT_APP_API_URL}/${option.thumbnail}`}
-          alt={option.name}
-        />
-        <span className="label">{option.name}</span>
-        <div className="row">
-          <span className="price">{option.price} ₽</span>
-          <Checkbox>
-            <input ref={ref} type="checkbox" name={name} value={option.slug} />
-            <span className="checkbox" />
-          </Checkbox>
-        </div>
-      </Container>
-    );
-  },
+  ({ name, option }, ref): JSX.Element => (
+    <Container>
+      <img
+        className="thumb"
+        src={`${process.env.REACT_APP_API_URL}/${option.thumbnail}`}
+        alt={option.name}
+      />
+      <span className="label">{option.name}</span>
+      <div className="row">
+        <span className="price">{option.price} ₽</span>
+        <Checkbox>
+          <input ref={ref} type="checkbox" name={name} value={option.slug} />
+          <span className="checkbox" />
+        </Checkbox>
+      </div>
+    </Container>
+  ),
 );
 
 export default IngredientCheckbox;
