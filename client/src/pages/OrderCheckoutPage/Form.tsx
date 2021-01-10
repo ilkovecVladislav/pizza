@@ -1,15 +1,132 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
-import { cardMonths, cardYears } from './constants';
+import Input from 'components/Form/Input';
+
+const FormContent = styled.div`
+  padding: 0 16px;
+`;
+
+const AddressSection = styled.div`
+  border-bottom: 1px solid #e1e1ed;
+  margin-bottom: 16px;
+
+  .title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #1f1f33;
+    margin-bottom: 16px;
+  }
+
+  .row {
+    display: flex;
+
+    & > * {
+      flex-grow: 0;
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 90px;
+      margin-right: 8px;
+    }
+
+    & > *:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
+const CardSection = styled.div`
+  border-bottom: 1px solid #e1e1ed;
+  margin-bottom: 16px;
+
+  .title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #1f1f33;
+    margin-bottom: 16px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+
+    & > label {
+      flex-grow: 0;
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 110px;
+      margin-right: 8px;
+    }
+
+    & > label:last-child {
+      max-width: 64px;
+      margin-right: 0;
+    }
+  }
+`;
+
+const HelpInfo = styled.p`
+  font-size: 14px;
+  line-height: 20px;
+  color: #4b4b7c;
+  margin-bottom: 16px;
+`;
+
+const Footer = styled.div`
+  padding: 12px 16px;
+  background: #ffffff;
+  box-shadow: 0px -16px 32px rgba(75, 75, 124, 0.05), 0px 0px 4px rgba(75, 75, 124, 0.1);
+  display: flex;
+  flex-direction: column;
+
+  .inner {
+    border-bottom: 1px dashed #e1e1ed;
+    margin-bottom: 8px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 18px;
+    color: #4b4b7c;
+    padding-bottom: 4px;
+  }
+
+  .result {
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  button {
+    border: unset;
+    background: #00a896;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 16px;
+    color: #ffffff;
+    height: 40px;
+    cursor: pointer;
+    &:disabled {
+      background: #f9f9fb;
+      color: #8181b1;
+      cursor: not-allowed;
+    }
+  }
+`;
 
 const schema = yup.object().shape({
   address: yup
     .string()
     .required('Адресс обязателен к заполнению')
-    .min(15, 'Слишком короткий адресс')
+    .min(5, 'Слишком короткий адресс')
     .max(70, 'Слишком длинный адресс'),
   entrance: yup
     .number()
@@ -41,6 +158,8 @@ const normalizeCardNumber = (value: string): string =>
     ?.join(' ')
     .substr(0, 19) || '';
 
+const DELIVERY_COST = 180;
+
 type Props = {
   price?: number;
   formSubmit: (data: FormValues) => void;
@@ -52,13 +171,13 @@ type FormValues = {
   floor?: number;
   door?: number;
   card_number: string;
-  cardMonth: string;
-  cardYear: string;
+  cardDate: string;
   cardCode: number;
+  cardName?: number;
 };
 
 const Form = ({ price = 0, formSubmit }: Props): JSX.Element => {
-  const { register, handleSubmit, errors } = useForm<FormValues>({
+  const { register, control, errors, formState, handleSubmit } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
@@ -68,84 +187,106 @@ const Form = ({ price = 0, formSubmit }: Props): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset>
-        <legend>Адрес доставки</legend>
-        <input
-          id="address"
-          data-testid="address"
-          ref={register}
-          type="text"
-          name="address"
-          placeholder="Введите адрес"
-        />
-        {errors.address && <p>{errors.address.message}</p>}
-        <label htmlFor="entrance">
-          подъезд
-          <input id="entrance" ref={register} type="number" name="entrance" />
-          {errors.entrance && <p>{errors.entrance.message}</p>}
-        </label>
-        <label htmlFor="floor">
-          этаж
-          <input id="floor" ref={register} type="number" name="floor" />
-          {errors.floor && <p>{errors.floor.message}</p>}
-        </label>
-        <label htmlFor="door">
-          квартира
-          <input id="door" ref={register} type="number" name="door" />
-          {errors.door && <p>{errors.door.message}</p>}
-        </label>
-      </fieldset>
-      <fieldset>
-        <legend>Данные для оплаты</legend>
-        <div className="card">
-          <div>
-            <input
-              className="card-number"
+      <FormContent>
+        <AddressSection>
+          <span className="title">Адрес доставки</span>
+          <Input
+            ref={register}
+            type="text"
+            name="address"
+            error={errors?.address?.message}
+            placeholder="Введите адрес"
+          />
+          <div className="row">
+            <Input
+              ref={register}
+              label="подъезд"
+              type="number"
+              name="entrance"
+              error={errors?.entrance?.message}
+            />
+            <Input
+              ref={register}
+              label="этаж"
+              type="number"
+              name="floor"
+              error={errors?.floor?.message}
+            />
+            <Input
+              ref={register}
+              label="квартира"
+              type="number"
+              name="door"
+              error={errors?.door?.message}
+            />
+          </div>
+        </AddressSection>
+        <CardSection>
+          <span className="title">Данные для оплаты</span>
+          <div className="card">
+            <Input
+              ref={register}
               data-testid="card-number"
-              placeholder="0000 0000 0000 0000"
+              placeholder="Номер карты"
               type="tel"
               inputMode="numeric"
               autoComplete="cc-number"
               name="card_number"
-              ref={register}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const { value } = event.target;
                 event.target.value = normalizeCardNumber(value);
               }}
+              error={errors?.card_number?.message}
             />
-            {errors.card_number && <p>{errors.card_number.message}</p>}
-          </div>
-          <div className="card-info">
-            <div className="card-date">
-              <select
-                className="card-month"
-                data-testid="card-month"
-                name="cardMonth"
+
+            <div className="row">
+              <Controller
+                control={control}
+                name="cardDate"
+                render={({ onChange, value, name, ref }) => (
+                  <InputMask mask="99/9999" maskChar=" " value={value} onChange={onChange}>
+                    {() => <Input ref={ref} name={name} placeholder="MM/YYYY" />}
+                  </InputMask>
+                )}
+              />
+              <Input
                 ref={register}
-              >
-                {cardMonths.map((month) => (
-                  <option key={month} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
-              <select className="card-year" data-testid="card-year" name="cardYear" ref={register}>
-                {cardYears.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
+                placeholder="CVV"
+                type="number"
+                name="cardCode"
+                error={errors?.cardCode?.message}
+              />
+            </div>
+            <Input ref={register} placeholder="Имя как на карте" type="text" name="cardName" />
+          </div>
+        </CardSection>
+
+        <HelpInfo>
+          Доставим пиццу в течение часа или вернем деньги. Артем слов на ветер не бросает.
+        </HelpInfo>
+      </FormContent>
+
+      <Footer>
+        <div className="content">
+          <div className="inner">
+            <div className="row">
+              <span>Стоимость заказа</span>
+              <span>{price} руб</span>
+            </div>
+            <div className="row">
+              <span>Доставка</span>
+              <span>{DELIVERY_COST} руб</span>
             </div>
           </div>
-          <div>
-            <input data-testid="card-code" ref={register} type="number" name="cardCode" />
-            {errors.cardCode && <p>{errors.cardCode.message}</p>}
+          <div className="row result">
+            <span>К оплате</span>
+            <span>{price + DELIVERY_COST} руб</span>
           </div>
         </div>
-      </fieldset>
-
-      <button type="submit">Оплатить {price}</button>
+        <button type="submit" disabled={!formState.isDirty}>
+          Заказать за {price + DELIVERY_COST} руб
+        </button>
+      </Footer>
     </form>
   );
 };

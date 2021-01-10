@@ -9,7 +9,12 @@ module.exports = {
     '@snowpack/plugin-typescript',
   ],
   install: [
-    /* ... */
+    './src/assets/fonts/MPLUSRounded1c-Bold.woff2',
+    './src/assets/fonts/MPLUSRounded1c-Bold.woff',
+    './src/assets/fonts/MPLUSRounded1c-Medium.woff2',
+    './src/assets/fonts/MPLUSRounded1c-Medium.woff',
+    './src/assets/fonts/MPLUSRounded1c-Regular.woff2',
+    './src/assets/fonts/MPLUSRounded1c-Regular.woff',
   ],
   installOptions: {
     /* ... */

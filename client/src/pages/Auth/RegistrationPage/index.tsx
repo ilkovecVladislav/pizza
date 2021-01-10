@@ -5,6 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 
+import BackButton from 'components/BackButton';
+import Input from 'components/Form/Input';
+import Container from './Container';
 import { logIn } from '../state/reducer';
 
 const schema = yup.object().shape({
@@ -24,40 +27,48 @@ type FormValues = {
 const Registration = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const handleGoBack = () => history.goBack();
 
-  const { register, handleSubmit, errors } = useForm<FormValues>({
+  const { register, handleSubmit, formState, errors } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
-  const handleGoBack = () => history.goBack();
   const onSubmit = () => {
     dispatch(logIn());
     history.push('/home');
   };
 
   return (
-    <div>
-      <button type="button" onClick={handleGoBack}>
-        Назад
-      </button>
-      <h3>Регистрация</h3>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">
-          E-mail
-          <input ref={register} id="email" type="email" name="email" />
-          {errors.email && <p>{errors.email.message}</p>}
-        </label>
-        <label htmlFor="password">
-          Пароль
-          <input ref={register} id="password" type="password" name="password" />
-          {errors.password && <p>{errors.password.message}</p>}
-        </label>
-        <button type="submit">Зарегистрироваться</button>
+    <Container>
+      <div className="top">
+        <button className="back-btn" type="button" onClick={handleGoBack}></button>
+        <h3 className="title">Регистрация</h3>
+      </div>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          ref={register}
+          label="E-mail"
+          type="email"
+          name="email"
+          error={errors?.email?.message}
+        />
+        <Input
+          ref={register}
+          label="Пароль"
+          type="password"
+          name="password"
+          error={errors?.password?.message}
+        />
+        <button className="submit-btn" type="submit" disabled={!formState.isDirty}>
+          Зарегистрироваться
+        </button>
         <Link to="/">
-          <button type="button">Войти</button>
+          <button className="link-btn" type="button">
+            Войти
+          </button>
         </Link>
       </form>
-    </div>
+    </Container>
   );
 };
 

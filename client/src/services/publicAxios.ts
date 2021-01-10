@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const { SNOWPACK_PUBLIC_API_URL } = import.meta.env;
+
 const publicAPI = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: SNOWPACK_PUBLIC_API_URL,
 });
 
 const publicGet = <T>(url: string, params = {}, options = {}): Promise<T> =>

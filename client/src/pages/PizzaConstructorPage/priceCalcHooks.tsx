@@ -9,8 +9,7 @@ import { PIZZA_SIZES, DOUGH } from './constants';
 const BASE_PIZZA_PRICE = 200;
 
 type Params = {
-  ingredients: FormValues;
-
+  selectedIngredients: FormValues;
   sauces: Ingredient[];
   meat: Ingredient[];
   cheese: Ingredient[];
@@ -18,7 +17,7 @@ type Params = {
 };
 
 const useCalculatePizzaPrice = ({
-  ingredients,
+  selectedIngredients,
   sauces,
   meat,
   cheese,
@@ -32,7 +31,7 @@ const useCalculatePizzaPrice = ({
       cheese: cheeseValue,
       vegetables: vegetablesValue,
       meat: meatValue,
-    } = ingredients;
+    } = selectedIngredients;
     const sizePrice: number = PIZZA_SIZES[size] ? PIZZA_SIZES[size].price : 0;
     const doughPrice: number = DOUGH[dough] ? DOUGH[dough].price : 0;
     const selectedSauce = sauces.find((item) => item.slug === sauce);
@@ -77,6 +76,6 @@ const useCalculatePizzaPrice = ({
       vegetablesPrice +
       meatPrice
     );
-  }, [ingredients, sauces, meat, cheese, vegetables]);
+  }, [selectedIngredients, sauces, meat, cheese, vegetables]);
 
 export default useCalculatePizzaPrice;
